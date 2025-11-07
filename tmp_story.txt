@@ -1,0 +1,140 @@
+import { useEffect, useState } from 'react'
+import SunsetBackground from '../components/SunsetBackground.jsx'
+
+// Données de souvenirs
+// Modifie/ajoute ici tes photos personnelles.
+// Place les fichiers dans `public/images` puis ajuste `src`, `title`, `desc` ci-dessous.
+// Tu peux aussi déplacer ce tableau dans `src/config.js` si tu préfères.
+const memories = [
+  {
+    src: '/images/photo1.jpg',
+    title: 'notre jour préféré',
+    desc: "c'est là que j'ai su",
+  },
+  {
+    src: '/images/photo2.jpg',
+    title: 'premier fou rire',
+    desc: 'minutes qui ont tout changé',
+  },
+  {
+    src: '/images/photo3.jpg',
+    title: 'toi + moi',
+    desc: 'juste nous, simplement',
+  },
+  // Ajoute d'autres souvenirs ici...
+]
+
+function MemoryModal({ memory, onClose }) {
+  if (!memory) return null
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Overlay sombre et léger flou de fond */}
+      <button
+        aria-label="Fermer le souvenir"
+        className="absolute inset-0 bg-black/30 backdrop-blur-[1px]"
+        onClick={onClose}
+      />
+
+      {/* Carte modal en glassmorphism */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="relative w-[92vw] max-w-lg sm:max-w-xl rounded-3xl border border-white/60 bg-white/25 backdrop-blur-md shadow-2xl overflow-hidden"
+      >
+        {/* Bouton fermer */}
+        <button
+          onClick={onClose}
+          className="absolute right-3 top-3 h-8 w-8 rounded-full bg-white/70 hover:bg-white/90 text-gray-700 flex items-center justify-center shadow-sm"
+          aria-label="Fermer"
+        >
+          ×
+        </button>
+
+        {/* Titre */}
+        <div className="px-5 pt-5 pb-3">
+          <h3 className="text-center text-primaryText font-medium">{memory.title}</h3>
+        </div>
+
+        {/* Séparateur discret */}
+        <div className="h-px mx-6 bg-white/50" />
+
+        {/* Photo */}
+        <div className="p-5">
+          <img
+            src={memory.src}
+            alt={memory.title}
+            className="mx-auto max-h-[60vh] w-full object-contain rounded-xl shadow"
+          />
+        </div>
+
+        {/* Séparateur discret */}
+        <div className="h-px mx-6 bg-white/40" />
+
+        {/* Description */}
+        <div className="px-6 pt-3 pb-6 text-center">
+          <p className="text-sm text-primaryText/80">{memory.desc}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function Story() {
+  const [activeMemory, setActiveMemory] = useState(null)
+
+  // Bloque le scroll arrière-plan quand le modal est ouvert
+  useEffect(() => {
+    const previous = document.body.style.overflow
+    if (activeMemory) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = previous || ''
+    return () => {
+      document.body.style.overflow = previous || ''
+    }
+  }, [activeMemory])
+
+  // Prépare une grille responsive en colonnes (style Pinterest)
+  const columnsClass = 'columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-4'
+
+  return (
+    <SunsetBackground>
+      <div className="w-full max-w-4xl mx-auto px-4">
+        {/* En‑tête aligné à droite mais centré à l'intérieur du conteneur */}
+        <div className="text-right pt-6 pb-4">
+          <h2 className="h-script text-2xl sm:text-3xl text-primaryText leading-tight">nos souvenirs</h2>
+          <p className="text-xs sm:text-sm text-primaryText/70">sélectionne ton souvenir…</p>
+        </div>
+
+        {/* Grille masonry */}
+        <div className={columnsClass}>
+          {memories.map((m, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveMemory(m)}
+              className="mb-4 w-full text-left group"
+              style={{ breakInside: 'avoid' }}
+            >
+              <div className="overflow-hidden rounded-2xl border border-white/60 bg-white/20 backdrop-blur-[1px] shadow-md">
+                <img
+                  src={m.src}
+                  alt={m.title}
+                  className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                />
+              </div>
+              {m.title && (
+                <div className="mt-2 px-1">
+                  <p className="text-xs text-primaryText/80">{m.title}</p>
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Modal affiché si un souvenir est actif */}
+      {activeMemory && (
+        <MemoryModal memory={activeMemory} onClose={() => setActiveMemory(null)} />
+      )}
+    </SunsetBackground>
+  )
+}
+

@@ -1,0 +1,22 @@
+import SunsetBackground from '../components/SunsetBackground.jsx'
+import PhotoSlideshow from '../components/PhotoSlideshow.jsx'
+import { storyIntro } from '../config.js'
+
+export default function Story() {
+  return (
+    <SunsetBackground>
+      <div className="flex flex-col items-center text-center space-y-8">
+        <div className="space-y-2">
+          <h2 className="h-script text-3xl text-primaryText leading-tight">
+            {storyIntro.heading}
+          </h2>
+          <p className="text-xs text-primaryText/70 font-normal">
+            {storyIntro.sub}
+          </p>
+        </div>
+        <PhotoSlideshow />
+      </div>
+    </SunsetBackground>
+  )
+}
+

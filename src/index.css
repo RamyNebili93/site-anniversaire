@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Couleur de texte globale */
+:root {
+  --text-color: #ffffff;
+}
+
+body {
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+/* Isabel Condensed Bold Italic (for landing page hero titles only) */
+@font-face {
+  font-family: 'Isabel Condensed';
+  src: url('/fonts/IsabelCondensed-BoldItalic.woff2') format('woff2'),
+       url('/fonts/IsabelCondensed-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Utility class to apply the requested font only where needed */
+.font-isabel-condensed {
+  font-family: 'Isabel Condensed', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Area font (used selectively for readability tweaks) */
+/* If the files aren't present, this will gracefully fall back to system-ui. */
+@font-face {
+  font-family: 'Area';
+  src: url('/fonts/Area-Regular.woff2') format('woff2'),
+       url('/fonts/Area-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Utility to apply Area where requested */
+.font-area {
+  font-family: 'Area', system-ui, sans-serif;
+}
+
+/* Classe pour les titres romantiques manuscrits */
+.h-script {
+  font-family: 'Marck Script', cursive;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+/* animation douce qui flotte (pour les orbes lumineuses du fond) */
+@keyframes float-slow {
+  0% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px) scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.6;
+  }
+}
+
+/* effet Ken Burns pour les photos du slideshow */
+@keyframes kenburns {
+  0% {
+    transform: scale(1) translate(-2%, -2%);
+  }
+  100% {
+    transform: scale(1.07) translate(2%, 2%);
+  }
+}
+
+/* petit fondu pour l'apparition d'un écran */
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

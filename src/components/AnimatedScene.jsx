@@ -118,7 +118,7 @@ export default function AnimatedScene() {
           </div>
         ) : (
           <div className="tv-box" aria-hidden={!showTv}>
-            <img src="images/tv.png" alt="TV" />
+            <img src="images/tvbox.png" alt="TV" />
           </div>
         )}
       </div>
